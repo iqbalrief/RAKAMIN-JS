@@ -13,7 +13,7 @@ function submitReg() {
    
 
     if(Number(age.value) >= 25) {
-      if(Number(money.value) >= 100000 && Number(money.value <= 100000)) {
+      if(Number(money.value) >= 100000 && Number(money.value <= 1000000)) {
           if(nama.value.length >=10){
               data.push({
                   nama : nama.value,
@@ -27,7 +27,7 @@ function submitReg() {
               for (let index = 0; index < data.length; index++) {
                   const tr = document.createElement("tr")
                   
-
+                  
                   const tdNama = document.createElement("td")
                   const valueNama = document.createTextNode(data[index].nama)
                   tdNama.appendChild(valueNama)
@@ -46,9 +46,18 @@ function submitReg() {
                   tbody.appendChild(tr)      
                   totalAge +=Number(data[index].age)
                   totalMoney += Number(data[index].money)        
-              }
-              avgAge += totalAge / data.length
-              avgMoney += totalMoney / data.length
+              }     
+            //   old way
+            //   avgAge += totalAge / data.length
+            //   avgMoney += totalMoney / data.length
+
+            const stats = new Statistik(data)
+            stats.hitungTotalAge()
+            stats.hitungTotalMoney()
+            stats.outputData()
+            avgAge = stats.totalAge / data.length
+            avgMoney = stats.totalMoney / data.length
+
               resume.innerHTML = `Rata Rata Pendaftar memiliki uang sangu sebesar ${avgMoney} dengan rata rata umur ${avgAge}`
               tablelist.appendChild(tbody)
               console.log(data);
